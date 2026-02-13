@@ -10,14 +10,15 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
-  GraduationCap
+  GraduationCap,
+  Home
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 const navItems = [
-  { icon: LayoutDashboard, label: "Dashboard", href: "/" },
+  { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
   { icon: BookOpen, label: "My Courses", href: "/courses" },
   { icon: BrainCircuit, label: "Quizzes", href: "/quizzes" },
   { icon: Trophy, label: "Leaderboard", href: "/leaderboard" },
@@ -35,19 +36,23 @@ export function Sidebar() {
       )}
     >
       <div className="p-6 flex items-center gap-3">
-        <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
-          <GraduationCap className="h-6 w-6 text-primary-foreground" />
-        </div>
-        {!collapsed && (
-          <h1 className="font-heading font-bold text-xl text-sidebar-foreground tracking-tight">
-            Lumina
-          </h1>
-        )}
+        <Link href="/">
+          <div className="flex items-center gap-3 cursor-pointer group">
+            <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center shrink-0 shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform">
+              <GraduationCap className="h-6 w-6 text-primary-foreground" />
+            </div>
+            {!collapsed && (
+              <h1 className="font-heading font-bold text-xl text-sidebar-foreground tracking-tight">
+                Lumina
+              </h1>
+            )}
+          </div>
+        </Link>
       </div>
 
       <div className="flex-1 py-6 px-4 space-y-2">
         {navItems.map((item) => {
-          const isActive = location === item.href || (item.href !== "/" && location.startsWith(item.href));
+          const isActive = location === item.href || (item.href !== "/dashboard" && location.startsWith(item.href));
           return (
             <Link key={item.href} href={item.href}>
               <div 
@@ -62,11 +67,6 @@ export function Sidebar() {
                 {!collapsed && (
                   <span className="font-medium text-sm">{item.label}</span>
                 )}
-                
-                {/* Active Indicator Strip */}
-                {isActive && !collapsed && (
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-white/20 rounded-l-full" />
-                )}
               </div>
             </Link>
           );
@@ -75,13 +75,19 @@ export function Sidebar() {
         <Separator className="my-4 bg-sidebar-border" />
 
         <Link href="/profile">
-          <div className="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
+          <div className={cn(
+            "flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-colors",
+            location === "/profile" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-sidebar-accent"
+          )}>
             <User className="h-5 w-5 shrink-0" />
             {!collapsed && <span className="font-medium text-sm">Profile</span>}
           </div>
         </Link>
         <Link href="/settings">
-          <div className="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
+          <div className={cn(
+            "flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-colors",
+            location === "/settings" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-sidebar-accent"
+          )}>
             <Settings className="h-5 w-5 shrink-0" />
             {!collapsed && <span className="font-medium text-sm">Settings</span>}
           </div>

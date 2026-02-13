@@ -12,11 +12,13 @@ import Quizzes from "@/pages/Quizzes";
 import Leaderboard from "@/pages/Leaderboard";
 import Profile from "@/pages/Profile";
 import Settings from "@/pages/Settings";
+import LandingPage from "@/pages/LandingPage";
 
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Dashboard}/>
+      <Route path="/" component={LandingPage}/>
+      <Route path="/dashboard" component={Dashboard}/>
       <Route path="/courses" component={Courses}/>
       <Route path="/courses/:id" component={CourseDetails}/>
       <Route path="/quizzes" component={Quizzes}/>
